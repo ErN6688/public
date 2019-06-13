@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <style type="text/css">
+        /* reset */
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        table {
+            empty-cells: show;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        body {
+            font: 12px/180% Arial,Lucida,Verdana,"宋体",Helvetica,sans-serif;
+            color: #333;
+            background: #fff;
+        }
+
+        div.flot-graph {
+            margin: 20px 0;
+        }
+
+        .codetext {
+            padding: 4px 2px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            font-family: Courier;
+            margin: 10px 0;
+        }
+
+        .tablebox th {
+            color: #3366cc;
+            font-size: 14px !important;
+        }
+
+        .tablebox th, .tablebox td {
+            text-align: center;
+            border: solid 1px #ddd;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        .tablebox caption {
+            height: 16px;
+            margin: 20px 0;
+            font-size: 16px;
+            font-weight: 800;
+            text-align: left;
+        }
+    </style>
+    <script type="text/javascript">
+        var czp = 0;
+        var cbp = 0;
+        var clickn = 0;
+        function st() {
+            var n = document.getElementById("N").value;
+            var test = ["正面", "背面"];
+            var zp="";
+            var bp = "";
+            var title = "";
+            var z = 0;
+            var f = 0;
+            for (var i = 0; i < n; i++) {
+                var mr = test[Math.floor(Math.random() * test.length)];
+                var ni = Number(i) + 1;
+                title += "<td >" + ni + "</td>";
+                if (mr == "正面") {
+                    zp += "<td color='red'>√</td>"
+                    bp += "<td> </td>"
+                    czp += 1;
+                    z++;
+                }
+                else {
+                    zp += "<td> </td>"
+                    bp += "<td>√</td>"
+                    cbp += 1;
+                    f++;
+                }
+            }
+            var zmb = z / n * 100;
+            var bmb = f / n * 100;
+            clickn += 1;
+            
+            if (n < 1000000) {
+                document.getElementById("pu").innerHTML = "<tr align='left'><td colspan='" + Number(ni) + 1 + "' align='left'>" + n + "次投掷结果</td></tr><tr><td width='5'>投次</td>" + title + "</tr><tr><td>正面</td>" + zp + "</tr><tr><td>背面</td>" + bp + "</tr>"
+            } else { document.getElementById("pu").innerHTML = ""; }
+            document.getElementById("putj").innerHTML = "<tr><td colspan='6' align='left'>累计出现次数</td></tr><tr><td>正</td><td>" + czp + "</td><td>背</td><td>" + cbp + "</td><td>点击总次数</td><td>" + clickn + "</td></tr>"
+            document.getElementById("gljl").innerHTML += "<tr><td>第" + clickn + "次投币数量</td><td>" + n + "</td><td>正面<b><font color='#ff0000'>" + z + "</font></b>次,概率：<b><font color='#ff0000'>" + zmb.toFixed(5) + "%</font></b>；背面<b><font color='#0026ff'>" + f + "</font></b>次,概率：<b><font color='#0026ff'>" + bmb.toFixed(5) + "%</font></b></td></tr>"
+        }
+    </script>
+</head>
+<body>
+    <div name="msg" id="msg"></div>
+    <div class="table-d"><table border="1" cellspacing="0" cellpadding="0" name="pu" id="pu" class="tablebox"></table><br/><table border="1" cellspacing="0" cellpadding="0" name="putj" id="putj" class="tablebox"></table><br /><table border="1" cellspacing="0" cellpadding="0" name="gljl" id="gljl" class="tablebox"></table></div>
+    <div style="font-size:50px;">
+        投币次数：<input type="text" name="N" id="N" values="" style="font-size:50px; height:60px; width:300px;">
+        <input type="button" name="confirmAlter" value="开  始" onclick="st()" style="font-size:45px; height:60px; width:150px;" />
+    </div>
+</body>
+</html>
